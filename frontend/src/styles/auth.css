@@ -1,0 +1,283 @@
+/* ==========================================================================
+   AgroMitra — Authentication Pages (Login & Registration) Stylesheet
+   Theme: Agricultural Forest Green, White, and Warm Cream
+   ========================================================================== */
+
+.auth-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at 10% 20%, #f4fbf6 0%, #fbf9f4 70%);
+  padding: 2rem 1rem;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.auth-top-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #15803d;
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid #ede6d8;
+  transition: all 0.2s ease;
+}
+
+.back-home-link:hover {
+  background-color: #ffffff;
+  color: #166534;
+  transform: translateX(-2px);
+}
+
+.auth-card {
+  background-color: #ffffff;
+  border: 1px solid #ede6d8;
+  border-radius: 20px;
+  padding: 2.25rem 1.75rem;
+  box-shadow: 0 12px 32px -8px rgba(21, 128, 61, 0.12);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.auth-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  color: #ffffff;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.auth-logo-badge:hover {
+  transform: scale(1.05);
+}
+
+.auth-badge-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #15803d;
+  margin-bottom: 0.4rem;
+}
+
+.auth-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.45rem;
+}
+
+.auth-subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Alert Banner */
+.auth-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+}
+
+.auth-alert-danger {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* Form Styles */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.required-star {
+  color: #dc2626;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #0f172a;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #15803d;
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
+}
+
+.mobile-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.mobile-prefix {
+  position: absolute;
+  left: 1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.mobile-input {
+  padding-left: 3.5rem;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  padding-right: 3rem;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.65rem;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.password-toggle-btn:hover {
+  color: #0f172a;
+}
+
+.auth-submit-btn {
+  margin-top: 0.75rem;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.auth-footer-prompt {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.auth-switch-link {
+  font-weight: 700;
+  color: #15803d;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.auth-switch-link:hover {
+  color: #166534;
+  text-decoration: underline;
+}
+
+.auth-trust-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #64748b;
+  text-align: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 16px;
+  }
+  .auth-title {
+    font-size: 1.45rem;
+  }
+}

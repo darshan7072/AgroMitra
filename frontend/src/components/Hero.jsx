@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, ShieldCheck, Smartphone, Leaf } from 'lucide-react';
 import fallbackHeroSvg from '../assets/farm-hero-fallback.svg';
 
-export default function Hero({ onOpenAuth }) {
+export default function Hero() {
   const [imgSrc, setImgSrc] = useState(
     'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80'
   );
@@ -41,14 +42,10 @@ export default function Hero({ onOpenAuth }) {
           </p>
 
           <div className="hero-action-buttons">
-            <button
-              type="button"
-              className="btn btn-primary btn-lg"
-              onClick={() => onOpenAuth('register')}
-            >
+            <Link to="/register" className="btn btn-primary btn-lg">
               <span>Get Started</span>
               <ArrowRight size={18} />
-            </button>
+            </Link>
             <a
               href="#features"
               className="btn btn-outline btn-lg"

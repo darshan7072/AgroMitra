@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Sprout, Mail, Phone, MapPin, Heart } from 'lucide-react';
 
-export default function Footer({ onOpenAuth }) {
+export default function Footer() {
   const scrollToSection = (e, sectionId) => {
     e.preventDefault();
     const el = document.getElementById(sectionId);
@@ -122,22 +123,19 @@ export default function Footer({ onOpenAuth }) {
             <h4 className="footer-col-title">Farmer Portal</h4>
             <ul className="footer-links-list">
               <li>
-                <button
-                  type="button"
-                  className="footer-text-btn"
-                  onClick={() => onOpenAuth('login')}
-                >
+                <Link to="/login" className="footer-text-btn">
                   Portal Login
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  type="button"
-                  className="footer-text-btn"
-                  onClick={() => onOpenAuth('register')}
-                >
+                <Link to="/register" className="footer-text-btn">
                   Create Account
-                </button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard" className="footer-text-btn">
+                  Farmer Dashboard
+                </Link>
               </li>
             </ul>
           </div>

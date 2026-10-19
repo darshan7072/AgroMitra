@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Sprout, Menu, X, LogIn, UserPlus } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
+import { Sprout, Menu, X, LogIn, UserPlus, LayoutDashboard, LogOut } from 'lucide-react';
 
 export default function Navbar({ onOpenAuth }) {
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -20,18 +26,44 @@ export default function Navbar({ onOpenAuth }) {
   const handleNavLinkClick = (e, targetId) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
+
+    if (location.pathname !== '/') {
+      navigate(`/#${targetId}`);
+      setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
+    }
+
     const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const handleLoginClick = () => {
+    setIsMobileMenuOpen(false);
+    navigate('/login');
+  };
+
+  const handleRegisterClick = () => {
+    setIsMobileMenuOpen(false);
+    navigate('/register');
+  };
+
+  const handleLogout = async () => {
+    setIsMobileMenuOpen(false);
+    await logout();
+    navigate('/');
+  };
+
   return (
     <header className={`navbar-header ${isScrolled ? 'navbar-scrolled' : ''}`}>
       <div className="container navbar-container">
         {/* Brand Logo & Name */}
-        <a
-          href="#home"
+        <Link
+          to="/"
           className="brand-logo-link"
           onClick={(e) => handleNavLinkClick(e, 'home')}
           aria-label="AgroMitra Home"
@@ -43,7 +75,7 @@ export default function Navbar({ onOpenAuth }) {
             <span className="brand-title">AgroMitra</span>
             <span className="brand-subtitle">Smart Krushi Sahayak</span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <nav className="desktop-nav" aria-label="Main Navigation">
@@ -89,22 +121,41 @@ export default function Navbar({ onOpenAuth }) {
 
         {/* Desktop Auth Action Buttons */}
         <div className="desktop-auth-actions">
-          <button
-            type="button"
-            className="btn btn-outline"
-            onClick={() => onOpenAuth('login')}
-          >
-            <LogIn size={16} />
-            <span>Login</span>
-          </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => onOpenAuth('register')}
-          >
-            <UserPlus size={16} />
-            <span>Create Account</span>
-          </button>
+          {isAuthenticated ? (
+            <>
+              <Link to="/dashboard" className="btn btn-primary btn-sm">
+                <LayoutDashboard size={16} />
+                <span>Dashboard ({user?.name?.split(' ')[0]})</span>
+              </Link>
+              <button
+                type="button"
+                className="btn btn-outline btn-sm dash-logout-btn"
+                onClick={handleLogout}
+              >
+                <LogOut size={16} />
+                <span>Logout</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={handleLoginClick}
+              >
+                <LogIn size={16} />
+                <span>Login</span>
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleRegisterClick}
+              >
+                <UserPlus size={16} />
+                <span>Create Account</span>
+              </button>
+            </>
+          )}
         </div>
 
         {/* Mobile Hamburger Toggle Button */}
@@ -159,28 +210,45 @@ export default function Navbar({ onOpenAuth }) {
             </nav>
 
             <div className="mobile-drawer-auth">
-              <button
-                type="button"
-                className="btn btn-outline btn-block"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onOpenAuth('login');
-                }}
-              >
-                <LogIn size={16} />
-                <span>Login</span>
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary btn-block"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onOpenAuth('register');
-                }}
-              >
-                <UserPlus size={16} />
-                <span>Create Account</span>
-              </button>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    className="btn btn-primary btn-block"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <LayoutDashboard size={16} />
+                    <span>Open Dashboard</span>
+                  </Link>
+                  <button
+                    type="button"
+                    className="btn btn-outline btn-block dash-logout-btn"
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={16} />
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline btn-block"
+                    onClick={handleLoginClick}
+                  >
+                    <LogIn size={16} />
+                    <span>Login</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-block"
+                    onClick={handleRegisterClick}
+                  >
+                    <UserPlus size={16} />
+                    <span>Create Account</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

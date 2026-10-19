@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 
-export default function CTA({ onOpenAuth }) {
+export default function CTA() {
   return (
     <section className="cta-section">
       <div className="container">
@@ -24,19 +25,15 @@ export default function CTA({ onOpenAuth }) {
                 <CheckCircle2 size={16} /> Mobile-Friendly
               </span>
               <span className="inline-check">
-                <CheckCircle2 size={16} /> Easy Registration Coming Soon
+                <CheckCircle2 size={16} /> Instant Account Registration
               </span>
             </div>
 
             <div className="cta-button-wrapper">
-              <button
-                type="button"
-                className="btn btn-cta-light btn-lg"
-                onClick={() => onOpenAuth('register')}
-              >
+              <Link to="/register" className="btn btn-cta-light btn-lg">
                 <span>Get Started with AgroMitra</span>
                 <ArrowRight size={18} />
-              </button>
+              </Link>
             </div>
           </div>
         </div>

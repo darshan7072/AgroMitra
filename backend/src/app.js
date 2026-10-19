@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { config } from './config/env.js';
 import routes from './routes/index.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -10,8 +11,11 @@ const app = express();
 // Middlewares
 app.use(cors({
   origin: config.clientUrl,
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
