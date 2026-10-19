@@ -3,14 +3,12 @@ node_modules/
 .pnp/
 .pnp.js
 
-# Environment variables & secrets
+# Environment variables & secrets (allow .env.example)
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
 *.env
 *.env.*
+!*.example
 credentials.json
 client_secret*.json
 *.pem
@@ -19,13 +17,17 @@ client_secret*.json
 *.cert
 *.pfx
 
-# Production build outputs
+# Production build outputs & caches
 dist/
+dist-ssr/
 build/
 out/
 .next/
 bin/
 obj/
+.cache/
+.vite/
+coverage/
 
 # Logs
 logs/
@@ -33,6 +35,7 @@ logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # System files & IDEs
 .DS_Store
@@ -41,3 +44,5 @@ Thumbs.db
 .vscode/
 *.suo
 *.user
+*.swp
+*.swo
