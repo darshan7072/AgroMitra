@@ -1,10 +1,17 @@
 import mongoose from 'mongoose';
 import { config } from './env.js';
 
+// Disable buffering so disconnected queries fail fast instead of hanging requests
+mongoose.set('bufferCommands', false);
+
 let isConnected = false;
 
+export const isDatabaseConnected = () => {
+  return mongoose.connection.readyState === 1;
+};
+
 export const connectDB = async () => {
-  if (isConnected) {
+  if (isConnected || isDatabaseConnected()) {
     return mongoose.connection;
   }
 
@@ -16,6 +23,7 @@ export const connectDB = async () => {
     console.log(`[MongoDB] Connected successfully to host: ${conn.connection.host}`);
     return conn;
   } catch (error) {
+    isConnected = false;
     console.warn(`[MongoDB Warning] Could not connect to database at ${config.mongoUri}`);
     console.warn(`[MongoDB Guidance] Please ensure MongoDB is running locally or set MONGODB_URI in backend/.env`);
     console.warn(`[MongoDB Atlas Setup Guide]:`);
@@ -28,7 +36,7 @@ export const connectDB = async () => {
 };
 
 export const disconnectDB = async () => {
-  if (!isConnected) return;
+  if (!isConnected && !isDatabaseConnected()) return;
   await mongoose.disconnect();
   isConnected = false;
   console.log('[MongoDB] Disconnected.');

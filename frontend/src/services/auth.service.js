@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+// In Vite dev, '/api' is proxied to http://localhost:5000/api via vite.config.js
+// If VITE_API_BASE_URL is explicitly set, it takes precedence.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 /**
  * Common fetch helper ensuring credentials (cookies) and JSON headers are sent
@@ -10,20 +12,33 @@ const request = async (endpoint, options = {}) => {
     Accept: 'application/json'
   };
 
-  const response = await fetch(url, {
-    ...options,
-    credentials: 'include', // Ensures HttpOnly cookie is attached
-    headers: {
-      ...defaultHeaders,
-      ...options.headers
-    }
-  });
+  let response;
+  try {
+    response = await fetch(url, {
+      ...options,
+      credentials: 'include', // Ensures HttpOnly cookie is attached
+      headers: {
+        ...defaultHeaders,
+        ...options.headers
+      }
+    });
+  } catch (networkError) {
+    const error = new Error(
+      'Unable to connect to the AgroMitra server. Please verify the backend is running on port 5000.'
+    );
+    error.isNetworkError = true;
+    error.original = networkError;
+    throw error;
+  }
 
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    const error = new Error(data.message || `Request failed with status ${response.status}`);
+    const error = new Error(
+      data.message || `Server request failed with status ${response.status}`
+    );
     error.status = response.status;
+    error.code = data.code;
     error.data = data;
     throw error;
   }

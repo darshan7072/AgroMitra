@@ -1,5 +1,6 @@
 import User from '../models/user.model.js';
 import { generateToken, getCookieOptions } from '../services/auth.service.js';
+import { isDatabaseConnected } from '../config/db.js';
 
 /**
  * Register a new farmer account
@@ -62,6 +63,15 @@ export const register = async (req, res, next) => {
       });
     }
 
+    // Guard: Ensure database is connected before processing queries
+    if (!isDatabaseConnected()) {
+      return res.status(503).json({
+        status: 'error',
+        code: 'DB_UNAVAILABLE',
+        message: 'Database service is currently unavailable. Please verify MongoDB is running or configure MONGODB_URI in backend/.env.'
+      });
+    }
+
     // Check for duplicate email
     const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
@@ -116,6 +126,15 @@ export const login = async (req, res, next) => {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
+
+    // Guard: Ensure database is connected before processing queries
+    if (!isDatabaseConnected()) {
+      return res.status(503).json({
+        status: 'error',
+        code: 'DB_UNAVAILABLE',
+        message: 'Database service is currently unavailable. Please verify MongoDB is running or configure MONGODB_URI in backend/.env.'
+      });
+    }
 
     // Query user and explicitly select password field
     const user = await User.findOne({ email: normalizedEmail }).select('+password');
